@@ -30,6 +30,10 @@ Install [R](https://www.r-project.org/) and [R Studio](https://www.rstudio.com/p
 ## 1.0 Introduction
 
 
+## 2.0 Data Manipulation
+
+One of the most important skills of a data scientist is manipulating data. It’s more of a general approach than a specific technique, so we’ll just work through a handful of examples to give you the flavor of it.
+
 ## 5.0 Final Words
 
 ### 5.1 Resources
