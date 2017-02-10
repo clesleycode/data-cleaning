@@ -130,6 +130,29 @@ And you get:
 ```
 
 
+## Data Munging 
+
+Data Munging is the process of fixing particular issues with the data, such as missing values in some variables, which can overcome by estimating those values wisely depending on the amount of missing values and the expected importance of variables.
+
+It also includes outliers on either end. Though they might make intuitive sense, they should be treated appropriately. This is outlier detection.
+
+### Missing Values
+
+Let us look at missing values in all the variables because most of the models don’t work with missing data and even if they do, imputing them helps more often than not. So, let us check the number of nulls / NaNs in the dataset
+
+``` python
+df.apply(lambda x: sum(x.isnull()),axis=0) 
+```
+
+Remember that missing values may not always be NaNs.
+
+### Outlier Detection
+
+#### Chebyshev Theorem 
+
+The Chebyshev Theorem provides a powerful algorithm to detect outliers and is fairly simple to implement. It's based on the distance of z-scores from k standard deviation.
+
+
 
 ## 5.0 Final Words
 
