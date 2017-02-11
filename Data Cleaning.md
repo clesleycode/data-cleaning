@@ -153,6 +153,26 @@ Remember that missing values may not always be NaNs.
 The Chebyshev Theorem provides a powerful algorithm to detect outliers and is fairly simple to implement. It's based on the distance of z-scores from k standard deviation.
 
 
+Some methods to screen outliers are z-scores, modified z-score, box plots, Grubb's test, Tietjen-Moore test exponential smoothing, Kimber test for exponential distribution and moving window filter algorithm. However, two of the robust methods in detail are: 
+
+Inter Quartile Range 
+An outlier is a point of data that lies over 1.5 IQRs below the first quartile (Q1) or above third quartile (Q3) in a given data set.
+High = (Q3) + 1.5 IQR
+Low = (Q1) - 1.5 IQR
+
+ 
+Tukey Method 
+
+It uses interquartile range to filter very large or very small numbers. It is practically the same method as above except that it uses the concept of "fences". The two values of fences are:
+Low outliers = Q1 - 1.5(Q3 - Q1) = Q1 - 1.5(IQR)
+High outliers = Q3 + 1.5(Q3 - Q1) = Q3 + 1.5(IQR)
+
+ 
+Anything outside of the fences is an outlier. 
+
+When you find outliers, you should not remove it without a qualitative assessment because that way you are altering the data and making it no longer pure. It is important to understand the context of analysis or importantly "The Why question - Why an outlier is different from other data points?" 
+
+This reason is critical. If outliers are attributed to error, you may throw it out but if they signify a new trend, pattern or reveal a valuable insight into the data you should retain it. 
 
 ## 5.0 Final Words
 
