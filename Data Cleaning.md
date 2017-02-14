@@ -9,8 +9,21 @@ Brought to you by [Lesley Cordero](http://www.columbia.edu/~lc2958) and [ADI](ht
 	+ [0.1 Python & Pip](#01-python--pip)
 	+ [0.2 R & R Studio](#02-r--r-studio)
 	+ [0.3 Other](#03-other)
-- [1.0 Background](#10-background)
-- [5.0 Resources](#50-resources)
+- [1.0 Introduction](#10-introduction)
+	+ [1.1 Glossary](#11-glossary)
+- [2.0 Data Normalization](#20-data-normalization)
+- [3.0 Strings](#30-strings)
+	+ [3.1 Lower and Upper](#31-lower-and-upper)
+	+ [3.2 StartsWith and EndsWith](#32-startswith-and-endswith)
+	+ [3.3 Join and Split](#33-join-and-split)
+- [4.0 Missing Values](#40-missing-values)
+	+ [4.1 Mice](#41-mice)
+		* [4.1.1 Missing Data Classification](#411-missing-data-classification)
+		* [4.1.2 Missing Data Pattern](#412-missing-data-pattern)
+		* [4.1.3 Imputation](#413-imputation)
+- [5.0 Outlier Detection](#50-outlier-detection)
+- [6.0 Final Words](#60-final-words)
+	+ [6.2 Mini Courses](#62-mini-courses)
 
 
 ## 0.0 Setup
@@ -21,9 +34,28 @@ This guide was written in Python 3.5 and R 3.2.3.
 
 Download [Python](https://www.python.org/downloads/) and [Pip](https://pip.pypa.io/en/stable/installing/).
 
+Let's install the modules we'll need for this tutorial. Open up your terminal and enter the following commands to install the needed python modules: 
+
+```
+pip3 install 
+```
+
 ### 0.2 R & R Studio
 
 Install [R](https://www.r-project.org/) and [R Studio](https://www.rstudio.com/products/rstudio/download/).
+
+Next, to install the R packages, cd into your workspace, and enter the following, very simple, command into your bash: 
+
+```
+R
+```
+
+This will prompt a session in R! From here, you can install any needed packages. For the sake of this tutorial, enter the following into your terminal R session:
+
+```
+install.packages("mice")
+install.packages("VIM")
+```
 
 ### 0.3 Virtual Environment
 
@@ -37,28 +69,25 @@ And then launch it with:
 source your_env/bin/activate
 ```
 
-To execute the visualizations in matplotlib, do the following:
-
-```
-cd ~/.matplotlib
-vim matplotlibrc
-```
-And then, write `backend: TkAgg` in the file. Now you should be set up with your virtual environment!
-
 Cool, now we're ready to start! 
 
 ## 1.0 Introduction
 
+### 1.1 Glossary
 
-## 2.0 Data Manipulation
+<b> Imputation:</b> The process of replacing missing data with substituted values. <br>
 
-One of the most important skills of a data scientist is manipulating data. It’s more of a general approach than a specific technique, so we’ll just work through a handful of examples to give you the flavor of it.
 
-## Strings
+## 2.0 Data Normalization
+
+
+## 3.0 Strings
+
+
+### 3.1 Lower and Upper
 
 The `upper()` and `lower()` string methods return a new string where all the letters in the original string have been converted to uppercase or lower-case, respectively. Nonletter characters in the string remain unchanged. 
 
-### Lower and Upper
 
 ``` python
 spam = 'Hello World!'
@@ -85,7 +114,7 @@ These methods don't change the string itself but return new strings. If you want
 
 The `upper()` and `lower()` methods are helpful if you need to make a case-insensitive comparison. The strings 'great' and 'GREat' are not equal to each other. But in the many instances, it does not matter whether the user types Great, GREAT, or grEAT because the string is first converted to lowercase.
 
-### StartsWith and EndsWith
+### 3.2 StartsWith and EndsWith
 
 The `startswith()` and `endswith()` methods return `True` if the string value they are called on begins or ends (respectively) with the string passed to the method; otherwise, they return False. 
 
@@ -106,7 +135,7 @@ Now, here's an example where we return a `false`:
 
 These methods are useful alternatives to the == equals operator if you need to check only whether the first or last part of the string, rather than the whole thing, is equal to another string.
 
-### Join and Split
+### 3.3 Join and Split
 
 The `join()` method is useful when you have a list of strings that need to be joined together into a single string value. The `join()` method is called on a string, gets passed a list of strings, and returns a string. The returned string is the concatenation of each string in the passed-in list. 
 
@@ -130,57 +159,224 @@ And you get:
 ```
 
 
-## Data Munging 
+## 4.0 Missing Values
 
-Data Munging is the process of fixing particular issues with the data, such as missing values in some variables, which can overcome by estimating those values wisely depending on the amount of missing values and the expected importance of variables.
+Missing data can often be a huge hindrance in data science and taking missing values into account isn't always so simple either. We'll now go over the different methodology of missing values.
 
-It also includes outliers on either end. Though they might make intuitive sense, they should be treated appropriately. This is outlier detection.
+If the amount of missing data is very small relative to the size of the dataset, leaving out the few samples with missing features may be the best strategy to prevent biasing the analysis. 
 
-### Missing Values
+Leaving out available datapoints, however, deprives the data of some amount of information. Depending on the situation, you may want to look for other fixes before deleting potentially useful datapoints from your dataset.
 
-Let us look at missing values in all the variables because most of the models don’t work with missing data and even if they do, imputing them helps more often than not. So, let us check the number of nulls / NaNs in the dataset
+While some quick fixes such as mean-substitution may be fine in some cases, such simple approaches usually introduce bias into the data, for instance, applying mean substitution leaves the mean unchanged but decreases variance.
 
-``` python
-df.apply(lambda x: sum(x.isnull()),axis=0) 
+#### 4.1 Mice
+
+The mice package in R helps you imputing missing values with plausible data values. These plausible values are drawn from a distribution specifically designed for each missing datapoint.
+
+We'll now proceed with an example using the airquality dataset available in R:
+
+``` R
+data <- airquality
 ```
 
-Remember that missing values may not always be NaNs.
+Let's remove some datapoints to work with in this tutorial:
+```
+data[4:10,3] <- rep(NA,7)
+data[1:5,4] <- NA
+```
 
-### Outlier Detection
+Replacing categorical variables is usually not a good idea. Some data scientists opt to include replacing missing categorical variables with the mode of the observed ones, however, it's not always the best choice. 
 
-#### Chebyshev Theorem 
+Here, we'll remove the categorical variables for simplicity. Then we look at the data using `summary()`.
 
-The Chebyshev Theorem provides a powerful algorithm to detect outliers and is fairly simple to implement. It's based on the distance of z-scores from k standard deviation.
+``` R
+data <- data[-c(5,6)]
+summary(data)
+```
+
+Ozone seems to be the variable with the most missing datapoints. 
+
+#### 4.1.1 Missing Data Classification 
+
+Understanding the reasons why data are missing is important to correctly handle the remaining data. If values are missing completely at random, the data sample is likely still representative of the population. But if the values are missing systematically, analysis may be biased. Here, we'll go into the different types of missing data:
+
+<b>Missing Completely at Random (MCAR)</b> means the data is actually missing at random, which is the best case scenario when it comes to missing data. 
+
+<b>Missing at Random (MAR)</b> means the missing data is not random, but can be accounted for when you take into account another variable.
+
+<b>Missing Not at Random (MNAR)</b> means it's not missing at random, a much more serious issue because the reason why there's missing data is usually unknown. 
+
+MCAR data is obviously the best scenario, but even that can pose a problem too if there's too much missing data. Typically, the maximum threshold for missing data is 5% of the total for large datasets. If it goes beyond that, it's probably a good idea to leave that feature or sample out.
+
+With that said, we'll check to make sure we have sufficient data:
+
+``` R
+pMiss <- function(x){sum(is.na(x))/length(x)*100}
+apply(data,2,pMiss)
+```
+
+This gets us:
+
+``` bash
+    Ozone   Solar.R      Wind      Temp 
+24.183007  4.575163  4.575163  0.000000 
+```
+
+Yikes. Ozone is missing almost 25% of its datapoints. This means we should drop it. 
+
+### 4.1.2 Missing Data Pattern
+
+The `mice` package provides the `md.pattern()` function to get a better understanding of the pattern of missing data: 
+
+``` R
+library(mice)
+md.pattern(data)
+```
+
+Which gets us:
+
+``` bash
+    Temp Solar.R Wind Ozone   
+107    1       1    1     1  0
+ 34    1       1    1     0  1
+  4    1       0    1     1  1
+  4    1       1    0     1  1
+  1    1       0    1     0  2
+  1    1       1    0     0  2
+  1    1       0    0     1  2
+  1    1       0    0     0  3
+       0       7    7    37 51
+```
+
+This tells us that 104 samples are complete, 34 samples miss only the Ozone measurement, 4 samples miss only the Solar.R value and so on.
+
+Just to make sense of what this means, let's try a visual representation using the `VIM` package:
+
+``` R
+library(VIM)
+aggr_plot <- aggr(data, col=c('navyblue','red'), numbers=TRUE, sortVars=TRUE, labels=names(data), cex.axis=.7, gap=3, ylab=c("Histogram of missing data","Pattern"))
+```
+
+This gets us:
+
+![alt text](Missing Data "Logo Title Text 1")
+
+The plot helps us understand that almost 70% of the samples are not missing any information, 22% are missing the Ozone value, and the remaining shows other missing patterns.
 
 
-Some methods to screen outliers are z-scores, modified z-score, box plots, Grubb's test, Tietjen-Moore test exponential smoothing, Kimber test for exponential distribution and moving window filter algorithm. However, two of the robust methods in detail are: 
+#### 4.1.3 Imputation
 
-Inter Quartile Range 
-An outlier is a point of data that lies over 1.5 IQRs below the first quartile (Q1) or above third quartile (Q3) in a given data set.
-High = (Q3) + 1.5 IQR
-Low = (Q1) - 1.5 IQR
+The `mice()` function takes care of the imputing process, like this:
 
- 
-Tukey Method 
+``` R
+tempData <- mice(data, m=5, maxit=50, meth='pmm', seed=500)
+summary(tempData)
+```
 
-It uses interquartile range to filter very large or very small numbers. It is practically the same method as above except that it uses the concept of "fences". The two values of fences are:
-Low outliers = Q1 - 1.5(Q3 - Q1) = Q1 - 1.5(IQR)
-High outliers = Q3 + 1.5(Q3 - Q1) = Q3 + 1.5(IQR)
+Here, `m = 5` refered to the number of imputed datasets - 5 is just a default value. `meth = 'pmm'` just refers to the imputation <b>method</b>. In this example, we're using mean matching. If you want to check out what other methods exist, type:
 
- 
-Anything outside of the fences is an outlier. 
+``` R
+methods(mice)
+```
 
-When you find outliers, you should not remove it without a qualitative assessment because that way you are altering the data and making it no longer pure. It is important to understand the context of analysis or importantly "The Why question - Why an outlier is different from other data points?" 
+Which gets you:
 
-This reason is critical. If outliers are attributed to error, you may throw it out but if they signify a new trend, pattern or reveal a valuable insight into the data you should retain it. 
+``` bash
+ [1] mice.impute.2l.norm      mice.impute.2l.pan       mice.impute.2lonly.mean 
+ [4] mice.impute.2lonly.norm  mice.impute.2lonly.pmm   mice.impute.cart        
+ [7] mice.impute.fastpmm      mice.impute.lda          mice.impute.logreg      
+[10] mice.impute.logreg.boot  mice.impute.mean         mice.impute.norm        
+[13] mice.impute.norm.boot    mice.impute.norm.nob     mice.impute.norm.predict
+[16] mice.impute.passive      mice.impute.pmm          mice.impute.polr        
+[19] mice.impute.polyreg      mice.impute.quadratic    mice.impute.rf          
+[22] mice.impute.ri           mice.impute.sample       mice.mids               
+[25] mice.theme              
+see '?methods' for accessing help and source code
+```
 
-Extreme value theory (EVT) focuses on rare events and extremes, as opposed to classical approaches to statistics which concentrate on average behaviors. EVT states that there are 3 types of distributions needed to model the the extreme data points of a collection of random observations from some distribution: the Gumble, Frechet, and Weibull distributions, also known as the Extreme Value Distributions (EVD) 1, 2, and 3, respectively. 
+Now, let's take a look at the imputed data for the Ozone variable:
 
-The EVT states that, if you were to generate N data sets from a given distribution, and then create a new dataset containing only the maximum values of these N data sets, this new dataset would only be accurately described by one of the EVD distributions: Gumbel, Frechet, or Weibull. The Generalized Extreme Value Distribution (GEV) is, then, a model combining the 3 EVT models as well as the EVD model. 
+``` R
+tempData$imp$Ozone
+```
 
-Knowing the models to use for modeling our data, we can then use the models to fit our data, and then evaluate. Once the best fitting model is found, analysis can be performed, including calculating possibilities. 
+If you want to check the imputation method used for each variable, you can do so with:
 
-## 5.0 Final Words
+``` R
+tempData$meth
+```
 
-### 5.1 Resources
+``` bash 
+  Ozone Solar.R    Wind    Temp 
+  "pmm"   "pmm"   "pmm"   "pmm" 
+```
+
+Now, let's take a look at our finished product:
+
+``` R
+completedData <- complete(tempData,1)
+```
+
+
+## 5.0 Outlier Detection
+
+An Outlier is an observation or point that is distant from other observations/points. They can also be referred to as observations whose probability to occur is low.
+
+### 5.1 Example 1
+
+Outlier detection varies between single dataset and multiple datasets. In single dataset outlier detection we figure out the outliers within the dataset by using two methods, Median Absolute Deviation (MAD) and Standard deviation (SD). Though MAD and SD give different results they are intended to do the same work.
+
+Let's generate a sample dataset:
+
+``` python
+from __future__ import division
+import numpy
+
+x = [10, 9, 13, 14, 15,8, 9, 10, 11, 12, 9, 0, 8, 8, 25,9,11,10]
+```
+
+#### 5.1.1 Median Absolute Deviation
+
+``` python
+axis = None
+num = numpy.mean(numpy.abs(x - numpy.mean(x, axis)), axis)
+mad = numpy.abs(x - numpy.median(x)) / num
+````
+
+#### 5.1.2 Standard Deviation
+
+``` python
+sd = numpy.abs(x - numpy.mean(x)) / numpy.std(x)
+```
+
+
+
+### Reasons
+
+Often, a outlier is present due to the measurements error. Therefore, one of the most important task in data analysis is to identify and only if it is necessary to remove the outlier.
+
+### Methodology
+
+There are parametric methods and non-parametric methods that can be used to identify outliers. Parametric methods involve assumption of some underlying distribution whereas there is no such requirement with non-parametric approach. 
+
+Additionally, you could do a univariate analysis by studying a single variable at a time or multivariate analysis where you would study more than one variable at the same time to identify outliers.
+
+
+
+## 6.0 Final Words
+
+### 6.2 Mini Courses
+
+Learn about courses [here](www.byteacademy.co/all-courses/data-science-mini-courses/).
+
+[Python 101: Data Science Prep](https://www.eventbrite.com/e/python-101-data-science-prep-tickets-30980459388) <br>
+[Intro to Data Science & Stats with R](https://www.eventbrite.com/e/data-sci-109-intro-to-data-science-statistics-using-r-tickets-30908877284) <br>
+[Data Acquisition Using Python & R](https://www.eventbrite.com/e/data-sci-203-data-acquisition-using-python-r-tickets-30980705123) <br>
+[Data Visualization with Python](https://www.eventbrite.com/e/data-sci-201-data-visualization-with-python-tickets-30980827489) <br>
+[Fundamentals of Machine Learning and Regression Analysis](https://www.eventbrite.com/e/data-sci-209-fundamentals-of-machine-learning-and-regression-analysis-tickets-30980917759) <br>
+[Natural Language Processing with Data Science](https://www.eventbrite.com/e/data-sci-210-natural-language-processing-with-data-science-tickets-30981006023) <br>
+[Machine Learning with Data Science](https://www.eventbrite.com/e/data-sci-309-machine-learning-with-data-science-tickets-30981154467) <br>
+[Databases & Big Data](https://www.eventbrite.com/e/data-sci-303-databases-big-data-tickets-30981182551) <br>
+[Deep Learning with Data Science](https://www.eventbrite.com/e/data-sci-403-deep-learning-with-data-science-tickets-30981221668) <br>
+[Data Sci 500: Projects](https://www.eventbrite.com/e/data-sci-500-projects-tickets-30981330995)
 
