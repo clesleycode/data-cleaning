@@ -10,6 +10,7 @@ Brought to you by [Lesley Cordero](http://www.columbia.edu/~lc2958), [Byte Acade
 	+ [0.2 R & R Studio](#02-r--r-studio)
 	+ [0.3 Virtual Environment](#03-virtual-environment)
 - [1.0 Introduction](#10-introduction)
+	+ [1.1 Glossary](#11-glossary)
 - [2.0 Data Normalization](#20-data-normalization)
 - [3.0 Strings](#30-strings)
 	+ [3.1 Lower and Upper](#31-lower-and-upper)
@@ -21,6 +22,11 @@ Brought to you by [Lesley Cordero](http://www.columbia.edu/~lc2958), [Byte Acade
 		* [4.1.2 Missing Data Pattern](#412-missing-data-pattern)
 		* [4.1.3 Imputation](#413-imputation)
 - [5.0 Outlier Detection](#50-outlier-detection)
+	+ [5.1 Reasons](#51-reasons)
+	+ [5.2 Parametric vs Non-Parametric](#52-parametri-vs-non-parametric)
+	+ [5.3 Example 1](#52-example-1)
+		* [5.3.1 Median Absolute Deviation](#53-median-absolute-deviation)
+		* [5.3.2 Standard Deviation](#532-standard-deviation)
 - [6.0 Final Words](#60-final-words)
 	+ [6.2 Mini Courses](#62-mini-courses)
 
@@ -331,7 +337,7 @@ Often, a outlier is present due to the measurements error. Therefore, one of the
 ![alt text](https://github.com/ByteAcademyCo/data-cleaning/blob/master/para.png?raw=true "Logo Title Text 1")
 
 
-### 5.3 Example 2
+### 5.3 Example 1
 
 Outlier detection varies between single dataset and multiple datasets. In single dataset outlier detection we figure out the outliers within the dataset by using two methods, Median Absolute Deviation (MAD) and Standard deviation (SD). Though MAD and SD give different results they are intended to do the same work.
 
@@ -359,12 +365,11 @@ sd = numpy.abs(x - numpy.mean(x)) / numpy.std(x)
 ```
 
 
-
 ## 6.0 Final Words
 
 ### 6.2 Mini Courses
 
-Learn about courses [here](www.byteacademy.co/all-courses/data-science-mini-courses/).
+Learn about courses [here](http://www.byteacademy.co/all-courses/data-science-mini-courses/).
 
 [Python 101: Data Science Prep](https://www.eventbrite.com/e/python-101-data-science-prep-tickets-30980459388) <br>
 [Intro to Data Science & Stats with R](https://www.eventbrite.com/e/data-sci-109-intro-to-data-science-statistics-using-r-tickets-30908877284) <br>
