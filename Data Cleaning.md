@@ -322,7 +322,25 @@ completedData <- complete(tempData,1)
 
 An Outlier is an observation or point that is distant from other observations/points. They can also be referred to as observations whose probability to occur is low.
 
-### 5.1 Example 1
+### 5.1 Reasons
+
+Often, a outlier is present due to the measurements error. Therefore, one of the most important task in data analysis is to identify and only if it is necessary to remove the outlier.
+
+
+### 5.2 Methodology
+
+There are parametric methods and non-parametric methods that can be used to identify outliers. Parametric methods involve assumption of some underlying distribution whereas there is no such requirement with non-parametric approach. 
+
+Additionally, you could do a univariate analysis by studying a single variable at a time or multivariate analysis where you would study more than one variable at the same time to identify outliers.
+
+Lastly, you may want to analyze the variable in isolation or maybe use it among a set of variables to build a predictive model.
+
+### 5.3 Parametric vs Non-Parametric
+
+![alt text](para "Logo Title Text 1")
+
+
+### 5.4 Example 2
 
 Outlier detection varies between single dataset and multiple datasets. In single dataset outlier detection we figure out the outliers within the dataset by using two methods, Median Absolute Deviation (MAD) and Standard deviation (SD). Though MAD and SD give different results they are intended to do the same work.
 
@@ -335,31 +353,19 @@ import numpy
 x = [10, 9, 13, 14, 15,8, 9, 10, 11, 12, 9, 0, 8, 8, 25,9,11,10]
 ```
 
-#### 5.1.1 Median Absolute Deviation
+#### 5.3.1 Median Absolute Deviation
 
 ``` python
 axis = None
 num = numpy.mean(numpy.abs(x - numpy.mean(x, axis)), axis)
 mad = numpy.abs(x - numpy.median(x)) / num
-````
+```
 
-#### 5.1.2 Standard Deviation
+#### 5.3.2 Standard Deviation
 
 ``` python
 sd = numpy.abs(x - numpy.mean(x)) / numpy.std(x)
 ```
-
-
-
-### Reasons
-
-Often, a outlier is present due to the measurements error. Therefore, one of the most important task in data analysis is to identify and only if it is necessary to remove the outlier.
-
-### Methodology
-
-There are parametric methods and non-parametric methods that can be used to identify outliers. Parametric methods involve assumption of some underlying distribution whereas there is no such requirement with non-parametric approach. 
-
-Additionally, you could do a univariate analysis by studying a single variable at a time or multivariate analysis where you would study more than one variable at the same time to identify outliers.
 
 
 
