@@ -78,12 +78,11 @@ Cool, now we're ready to start!
 
 ## 1.0 Introduction
 
+In this tutorial, we'll go through some of the basics of data cleaning and normalization, all of which you'll apply to your machine learning knowledge later on. 
+
 ### 1.1 Glossary
 
 <b> Imputation:</b> The process of replacing missing data with substituted values. <br>
-
-
-## 2.0 Data Normalization
 
 
 ## 3.0 Strings
@@ -264,7 +263,7 @@ aggr_plot <- aggr(data, col=c('navyblue','red'), numbers=TRUE, sortVars=TRUE, la
 
 This gets us:
 
-![alt text](Missing Data "Logo Title Text 1")
+![alt text](https://github.com/ByteAcademyCo/data-cleaning/blob/master/missing_data.png?raw=true "Logo Title Text 1")
 
 The plot helps us understand that almost 70% of the samples are not missing any information, 22% are missing the Ozone value, and the remaining shows other missing patterns.
 
