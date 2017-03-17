@@ -84,6 +84,7 @@ In this tutorial, we'll go through some of the basics of data cleaning and norma
 
 <b> Imputation:</b> The process of replacing missing data with substituted values. <br>
 
+## 2.0 Data Normalization
 
 ## 3.0 Strings
 
