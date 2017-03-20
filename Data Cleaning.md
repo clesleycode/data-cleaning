@@ -6,8 +6,8 @@ Brought to you by [Lesley Cordero](http://www.columbia.edu/~lc2958), [Byte Acade
 ## Table of Contents
 
 - [0.0 Setup](#00-setup)
-	+ [0.1 Python & Pip](#01-python--pip)
-	+ [0.2 R & R Studio](#02-r--r-studio)
+	+ [0.1 Python and Pip](#01-python-and-pip)
+	+ [0.2 R and R Studio](#02-r-and-r-studio)
 	+ [0.3 Virtual Environment](#03-virtual-environment)
 - [1.0 Introduction](#10-introduction)
 	+ [1.1 Glossary](#11-glossary)
@@ -85,6 +85,41 @@ In this tutorial, we'll go through some of the basics of data cleaning and norma
 <b> Imputation:</b> The process of replacing missing data with substituted values. <br>
 
 ## 2.0 Data Normalization
+
+
+### 2.1 Dropping Observations
+
+We've established our data isn't always perfect. Sometimes that means dropping values all together. In this example, we'll look at dorm data. We begin by loading the data into `pandas`. 
+
+``` python
+import pandas as pd
+houses = pd.read_csv("./housing.csv")
+```
+
+For this example, we'll be getting rid of the first two rows, which we can easily do with the `drop()` function:
+
+``` python
+houses = houses.drop([0,1])
+```
+This gets us:
+```
+2      Shapiro    Craig Rhodes
+3         Watt  Lesley Cordero
+4  East Campus    Martin Perez
+5     Broadway   Menna Elsayed
+6      Wallach   Will Essilfie
+```
+Now, let's say one of the students graduated and moved out - obviously we no longer want them in our dataset anymore, so we want to filter it out with condition
+``` python
+houses = houses[houses.Name != "Lesley Cordero"]
+```
+```
+          Dorm           Name
+2      Shapiro   Craig Rhodes
+4  East Campus   Martin Perez
+5     Broadway  Menna Elsayed
+6      Wallach  Will Essilfie
+```
 
 ## 3.0 Strings
 
