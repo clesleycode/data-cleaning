@@ -101,6 +101,7 @@ For this example, we'll be getting rid of the first two rows, which we can easil
 ``` python
 houses = houses.drop([0,1])
 ```
+
 This gets us:
 ```
 2      Shapiro    Craig Rhodes
@@ -360,21 +361,24 @@ completedData <- complete(tempData,1)
 
 ## 5.0 Outlier Detection
 
-An Outlier is an observation or point that is distant from other observations/points. They can also be referred to as observations whose probability to occur is low. Outliers are important because they can impact accuracy of predictive models. Detecting outliers and dealing with them is a critical step in data preparation for predictive modeling.
+An Outlier is an observation or point that is distant from other observations/points. They can also be referred to as observations whose probability to occur is very low. Outliers are important because they can impact accuracy of predictive models. 
 
-### 5.1 Reasons
+### 5.1 Causes
 
 Often, a outlier is present due to the measurements error. Therefore, one of the most important task in data analysis is to identify and only if it is necessary to remove the outlier.
 
 
 ### 5.2 Parametric vs Non-Parametric
 
-![alt text](https://github.com/ByteAcademyCo/data-cleaning/blob/master/para.png?raw=true "Logo Title Text 1")
+There are two main types of outliers, representative and nonrepresentative. An outlier that is considered representative is one that is correct and not considered unique; and therefore, should not be disregarded from its dataset. 
+
+A nonrepresentative outlier, then, is one that's incorrect because its cause is due to error or because there are no values like it in the rest of the population. These should typically be excluded. 
 
 
 ### 5.3 Example 1
 
-Outlier detection varies between single dataset and multiple datasets. In single dataset outlier detection we figure out the outliers within the dataset by using two methods, Median Absolute Deviation (MAD) and Standard deviation (SD). Though MAD and SD give different results they are intended to do the same work.
+Outlier detection varies between single dataset and multiple datasets. There isn't a concrete definition for what encompasses an outlier, so there are different methodologies to accomplish outlier detection. 
+Two methods we'll focus on are Median Absolute Deviation (MAD) and Standard deviation (SD). Though MAD and SD give different results, they're used for the same work.
 
 Let's generate a sample dataset:
 
