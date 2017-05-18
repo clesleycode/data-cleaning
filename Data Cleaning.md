@@ -375,6 +375,13 @@ There are two main types of outliers, representative and nonrepresentative. An o
 A nonrepresentative outlier, then, is one that's incorrect because its cause is due to error or because there are no values like it in the rest of the population. These should typically be excluded. 
 
 
+### 5.3 Novelty vs Outlier
+
+There are two methods for general outlier detection: novelty detection and outlier detection.
+
+Novelty Detection is used for datasets which are <b>not</b> polluted by outliers and your goal is to identify the abnormal datapoints. On the other hand, if your dataset has outlier and the goal is to distinguish inliers from outliers, then you're performing outlier detection. 
+
+
 ### 5.3 Example 1
 
 Outlier detection varies between single dataset and multiple datasets. There isn't a concrete definition for what encompasses an outlier, so there are different methodologies to accomplish outlier detection. 
@@ -406,18 +413,7 @@ sd = numpy.abs(x - numpy.mean(x)) / numpy.std(x)
 
 ## 6.0 Final Words
 
-### 6.2 Mini Courses
+### 6.1 Resources
 
-Learn about courses [here](http://www.byteacademy.co/all-courses/data-science-mini-courses/).
 
-[Python 101: Data Science Prep](https://www.eventbrite.com/e/python-101-data-science-prep-tickets-30980459388) <br>
-[Intro to Data Science & Stats with R](https://www.eventbrite.com/e/data-sci-109-intro-to-data-science-statistics-using-r-tickets-30908877284) <br>
-[Data Acquisition Using Python & R](https://www.eventbrite.com/e/data-sci-203-data-acquisition-using-python-r-tickets-30980705123) <br>
-[Data Visualization with Python](https://www.eventbrite.com/e/data-sci-201-data-visualization-with-python-tickets-30980827489) <br>
-[Fundamentals of Machine Learning and Regression Analysis](https://www.eventbrite.com/e/data-sci-209-fundamentals-of-machine-learning-and-regression-analysis-tickets-30980917759) <br>
-[Natural Language Processing with Data Science](https://www.eventbrite.com/e/data-sci-210-natural-language-processing-with-data-science-tickets-30981006023) <br>
-[Machine Learning with Data Science](https://www.eventbrite.com/e/data-sci-309-machine-learning-with-data-science-tickets-30981154467) <br>
-[Databases & Big Data](https://www.eventbrite.com/e/data-sci-303-databases-big-data-tickets-30981182551) <br>
-[Deep Learning with Data Science](https://www.eventbrite.com/e/data-sci-403-deep-learning-with-data-science-tickets-30981221668) <br>
-[Data Sci 500: Projects](https://www.eventbrite.com/e/data-sci-500-projects-tickets-30981330995)
-
+[Anomaly Detection](https://turi.com/learn/userguide/anomaly_detection/intro.html) <br>
