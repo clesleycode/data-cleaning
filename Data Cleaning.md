@@ -86,7 +86,6 @@ In this tutorial, we'll go through some of the basics of data cleaning and norma
 
 ## 2.0 Data Normalization
 
-
 ### 2.1 Dropping Observations
 
 We've established our data isn't always perfect. Sometimes that means dropping values all together. In this example, we'll look at dorm data. We begin by loading the data into `pandas`. 
@@ -103,6 +102,7 @@ houses = houses.drop([0,1])
 ```
 
 This gets us:
+
 ```
 2      Shapiro    Craig Rhodes
 3         Watt  Lesley Cordero
@@ -110,7 +110,9 @@ This gets us:
 5     Broadway   Menna Elsayed
 6      Wallach   Will Essilfie
 ```
+
 Now, let's say one of the students graduated and moved out - obviously we no longer want them in our dataset anymore, so we want to filter it out with condition
+
 ``` python
 houses = houses[houses.Name != "Lesley Cordero"]
 ```
@@ -136,17 +138,19 @@ spam = spam.upper()
 ```
 
 And that returns:
+
 ```
 'HELLO WORLD!'
 ```
 
-Likewise:
+Likewise, there's a `lower()` function in Python that you can also utilize:
 
 ``` python
 spam = spam.lower()
 ```
 
 And that returns:
+
 ```
 'hello world!'
 ```
@@ -162,14 +166,17 @@ The `startswith()` and `endswith()` methods return `True` if the string value th
 ``` python
 'Hello world!'.startswith('Hello')
 ```
+
 returns `True`, as expected.
 
 ``` python
 'Hello world!'.endswith('world')
 ```
+
 also returns `True`, as expected.
 
 Now, here's an example where we return a `false`:
+
 ``` python
 'abc123'.startswith('abcdef')
 ```
@@ -185,6 +192,7 @@ The `join()` method is useful when you have a list of strings that need to be jo
 ```
 
 This returns:
+
 ```
 'python, R, Java'
 ```
@@ -194,7 +202,9 @@ Oppositely, you can split a sentence into its word components. In natural langua
 ``` python
 'My name is Lesley'.split()
 ```
+
 And you get:
+
 ```
 ['My', 'name', 'is', 'Lesley']
 ```
@@ -221,6 +231,7 @@ data <- airquality
 ```
 
 Let's remove some datapoints to work with in this tutorial:
+
 ```
 data[4:10,3] <- rep(NA,7)
 data[1:5,4] <- NA
@@ -385,6 +396,7 @@ Novelty Detection is used for datasets which are <b>not</b> polluted by outliers
 ### 5.3 Example 1
 
 Outlier detection varies between single dataset and multiple datasets. There isn't a concrete definition for what encompasses an outlier, so there are different methodologies to accomplish outlier detection. 
+
 Two methods we'll focus on are Median Absolute Deviation (MAD) and Standard deviation (SD). Though MAD and SD give different results, they're used for the same work.
 
 Let's generate a sample dataset:
